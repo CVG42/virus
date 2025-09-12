@@ -16,6 +16,7 @@ MonoBehaviour:
   _jumpForce: 10
   _fallMultiplier: 2.5
   _ascendMultiplier: 2
+  _rotationSpeed: 10
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
