@@ -9,6 +9,7 @@ namespace Virus
         public float MoveHorizontal => _moveHorizontal;
 
         public event Action OnJumpButtonPressed;
+        public event Action<char> OnShootLetterPressed;
 
         private float _moveForward;
         private float _moveHorizontal;
@@ -16,6 +17,7 @@ namespace Virus
         private void Update()
         {
             CheckMovementInputs();
+            CheckTypingInput();
         }
 
         private void CheckMovementInputs()
@@ -26,6 +28,21 @@ namespace Virus
             if (Input.GetButtonDown("Jump"))
             {
                 OnJumpButtonPressed?.Invoke();
+            }
+        }
+
+        private void CheckTypingInput()
+        {
+            foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (key < KeyCode.A || key > KeyCode.Z) continue;
+
+                if (Input.GetKeyDown(key))
+                {
+                    char pressed = key.ToString()[0];
+                    OnShootLetterPressed?.Invoke(pressed);
+                    break;
+                }
             }
         }
     }
