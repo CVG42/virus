@@ -7,7 +7,7 @@ namespace Virus
         [SerializeField] private float _shootRange = 30f;
         [SerializeField] private LayerMask _enemyLayer;
         [SerializeField] private Transform _firePoint;
-        [SerializeField] private BulletPool _bulletPool;
+        [SerializeField] private GameObject _bullet;
 
         private void Start()
         {
@@ -36,11 +36,11 @@ namespace Virus
 
         private void Shoot(BaseEnemy enemy)
         {
-            GameObject bulletObj = _bulletPool.GetBullet();
-            bulletObj.transform.position = _firePoint.position;
+            GameObject bullet = ObjectPoolManager.Source.Borrow(_bullet);
+            bullet.transform.position = _firePoint.position;
 
-            Bullet bullet = bulletObj.GetComponent<Bullet>();
-            bullet.Initialize(enemy, _bulletPool);
+            Bullet instantiatedBullet = bullet.GetComponent<Bullet>();
+            instantiatedBullet.Initialize(enemy);
         }
     }
 }

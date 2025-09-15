@@ -8,12 +8,10 @@ namespace Virus
         private float _lifeTime = 2f;
         private float _timer;
         private BaseEnemy _target;
-        private BulletPool _pool;
 
-        public void Initialize(BaseEnemy enemy, BulletPool bulletPool)
+        public void Initialize(BaseEnemy enemy)
         {
             _target = enemy;
-            _pool = bulletPool;
             _timer = _lifeTime;
         }
 
@@ -21,22 +19,31 @@ namespace Virus
         {
             if (_target == null)
             {
-                _pool.ReturnBullet(gameObject);
+                ObjectPoolManager.Source.Return(gameObject);
                 return;
             }
 
+            BulletShot();
+            DestroyBulletAfterTime();
+        }
+
+        private void BulletShot()
+        {
             transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, _target.transform.position) < 0.3f)
             {
                 _target.TakeDamage();
-                _pool.ReturnBullet(gameObject);
+                ObjectPoolManager.Source.Return(gameObject);
             }
+        }
 
+        private void DestroyBulletAfterTime()
+        {
             _timer -= Time.deltaTime;
             if (_timer <= 0f)
             {
-                _pool.ReturnBullet(gameObject);
+                ObjectPoolManager.Source.Return(gameObject);
             }
         }
     }
