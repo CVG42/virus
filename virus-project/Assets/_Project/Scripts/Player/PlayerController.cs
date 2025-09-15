@@ -34,6 +34,7 @@ namespace Virus
         private void Update()
         {
             GroundCheck();
+            RotatePlayer();
         }
 
         private void FixedUpdate()
@@ -62,7 +63,7 @@ namespace Virus
 
         private void MovePlayer()
         {
-            Vector3 movement = (transform.right * InputManager.Source.MoveHorizontal + transform.forward * InputManager.Source.MoveForward).normalized;
+            Vector3 movement = (Vector3.right * InputManager.Source.MoveHorizontal + Vector3.forward * InputManager.Source.MoveForward).normalized;
             Vector3 targetVelocity = movement * _playerVariables.MoveSpeed;
 
             Vector3 velocity = _rigidbody.velocity;
@@ -96,6 +97,20 @@ namespace Virus
             else if (_rigidbody.velocity.y > 0)
             {
                 _rigidbody.velocity += Vector3.up * Physics.gravity.y * _playerVariables.AscendMultiplier * Time.fixedDeltaTime;
+            }
+        }
+
+        private void RotatePlayer()
+        {
+            float horizontal = InputManager.Source.MoveHorizontal;  
+            float vertical = InputManager.Source.MoveForward;      
+
+            Vector3 inputDirection = new Vector3(horizontal, 0, vertical);
+
+            if (inputDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _playerVariables.RotationSpeed * Time.deltaTime);
             }
         }
     }
