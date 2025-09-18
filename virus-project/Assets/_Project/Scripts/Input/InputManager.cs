@@ -9,6 +9,8 @@ namespace Virus
         public float MoveHorizontal => _moveHorizontal;
 
         public event Action OnJumpButtonPressed;
+        public event Action OnBackspacePressed;
+        public event Action<char> OnTypingKeyPressed;
         public event Action<char> OnShootLetterPressed;
 
         private float _moveForward;
@@ -16,12 +18,19 @@ namespace Virus
 
         private void Update()
         {
-            CheckMovementInputs();
+            CheckMovementInput();
+            CheckShootingInput();
             CheckTypingInput();
         }
 
-        private void CheckMovementInputs()
+        private void CheckMovementInput()
         {
+            if (GameStateManager.Source.CurrentGameState != GameState.OnPlay)
+            {
+                ResetInputValues();
+                return;
+            }
+
             _moveHorizontal = Input.GetAxisRaw("Horizontal");
             _moveForward = Input.GetAxisRaw("Vertical");
 
@@ -31,8 +40,10 @@ namespace Virus
             }
         }
 
-        private void CheckTypingInput()
+        private void CheckShootingInput()
         {
+            if (GameStateManager.Source.CurrentGameState != GameState.OnPlay) return;
+
             foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
             {
                 if (key < KeyCode.A || key > KeyCode.Z) continue;
@@ -44,6 +55,33 @@ namespace Virus
                     break;
                 }
             }
+        }
+
+        private void CheckTypingInput()
+        {
+            if (GameStateManager.Source.CurrentGameState is not (GameState.OnAntivirusEvent or GameState.OnTyping)) return;
+
+            if (!string.IsNullOrEmpty(Input.inputString))
+            {
+                foreach (char c in Input.inputString)
+                {
+                    if (c == '\b')
+                    {
+                        OnBackspacePressed?.Invoke();
+                        continue;
+                    }
+
+                    if (c == '\n' || c == '\r') continue;
+
+                    OnTypingKeyPressed?.Invoke(c);
+                }
+            }
+        }
+
+        private void ResetInputValues()
+        {
+            _moveForward = 0;
+            _moveHorizontal = 0;
         }
     }
 }
