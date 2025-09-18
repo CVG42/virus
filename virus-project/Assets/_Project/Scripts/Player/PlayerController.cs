@@ -87,7 +87,6 @@ namespace Virus
             }
         }
 
-
         private void ApplyJumpPhysics()
         {
             if (_rigidbody.velocity.y < 0)
