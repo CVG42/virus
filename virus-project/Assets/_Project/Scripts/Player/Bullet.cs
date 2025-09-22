@@ -7,9 +7,9 @@ namespace Virus
         private float _speed = 20f;
         private float _lifeTime = 2f;
         private float _timer;
-        private BaseEnemy _target;
+        private EnemyController _target;
 
-        public void Initialize(BaseEnemy enemy)
+        public void Initialize(EnemyController enemy)
         {
             _target = enemy;
             _timer = _lifeTime;
