@@ -25,7 +25,7 @@ namespace Virus
 
             foreach (Collider hit in hits)
             {
-                BaseEnemy enemy = hit.GetComponent<BaseEnemy>();
+                EnemyController enemy = hit.GetComponent<EnemyController>();
                 if (enemy != null && enemy.Letter == letter)
                 {
                     Shoot(enemy);
@@ -34,7 +34,7 @@ namespace Virus
             }
         }
 
-        private void Shoot(BaseEnemy enemy)
+        private void Shoot(EnemyController enemy)
         {
             GameObject bullet = ObjectPoolManager.Source.Borrow(_bullet);
             bullet.transform.position = _firePoint.position;

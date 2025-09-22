@@ -22,6 +22,7 @@ namespace Virus
 
         private void HandleEventCompleted()
         {
+            TypingManager.Source.OnTypingCompleted -= HandleEventCompleted;
             TypingManager.Source.DeactivateUI();
             GameStateManager.Source.ChangeState(GameState.OnPlay);
         }
