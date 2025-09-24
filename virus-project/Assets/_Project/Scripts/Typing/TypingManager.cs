@@ -42,12 +42,12 @@ namespace Virus
             string correctText = $"<color=green>{_targetText.Substring(0, _currentIndex)}</color>";
             string remainingText = $"<color=grey>{_targetText.Substring(_currentIndex)}</color>";
 
-            if (GameStateManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
+            if (GameManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
             {
                  _originalText.text = correctText + remainingText;
                 _typedText.text = _targetText.Substring(0, _currentIndex);
             }
-            else if (GameStateManager.Source.CurrentGameState == GameState.OnTyping)
+            else if (GameManager.Source.CurrentGameState == GameState.OnTyping)
             {
                 _eventWordText.text = correctText + remainingText;
             }
@@ -93,11 +93,11 @@ namespace Virus
 
         public void ActivateUI()
         {
-            if (GameStateManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
+            if (GameManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
             {
                 _antivirusCanvas.SetActive(true);
             }
-            else if (GameStateManager.Source.CurrentGameState == GameState.OnTyping)
+            else if (GameManager.Source.CurrentGameState == GameState.OnTyping)
             {
                 _typingEventCanvas.SetActive(true);
             }
@@ -105,11 +105,11 @@ namespace Virus
 
         public void DeactivateUI()
         {
-            if (GameStateManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
+            if (GameManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
             {
                 _antivirusCanvas.SetActive(false);
             }
-            else if (GameStateManager.Source.CurrentGameState == GameState.OnTyping)
+            else if (GameManager.Source.CurrentGameState == GameState.OnTyping)
             {
                 _typingEventCanvas.SetActive(false);
             }

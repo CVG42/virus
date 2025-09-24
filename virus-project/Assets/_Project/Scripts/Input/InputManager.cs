@@ -25,7 +25,7 @@ namespace Virus
 
         private void CheckMovementInput()
         {
-            if (GameStateManager.Source.CurrentGameState != GameState.OnPlay)
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay)
             {
                 ResetInputValues();
                 return;
@@ -42,7 +42,7 @@ namespace Virus
 
         private void CheckShootingInput()
         {
-            if (GameStateManager.Source.CurrentGameState != GameState.OnPlay) return;
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay) return;
 
             foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
             {
@@ -59,7 +59,7 @@ namespace Virus
 
         private void CheckTypingInput()
         {
-            if (GameStateManager.Source.CurrentGameState is not (GameState.OnAntivirusEvent or GameState.OnTyping)) return;
+            if (GameManager.Source.CurrentGameState is not (GameState.OnAntivirusEvent or GameState.OnTyping)) return;
 
             if (!string.IsNullOrEmpty(Input.inputString))
             {

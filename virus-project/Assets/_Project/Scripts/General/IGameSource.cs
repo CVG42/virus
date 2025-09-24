@@ -2,7 +2,7 @@ using System;
 
 namespace Virus
 {
-    public interface IStateSource
+    public interface IGameSource
     {
         event Action<GameState> OnGameStateChanged;
         GameState CurrentGameState { get; }
