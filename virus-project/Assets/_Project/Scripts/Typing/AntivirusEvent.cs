@@ -13,7 +13,7 @@ namespace Virus
             if (_isActivated) return;
             if (!other.CompareTag("Player")) return;
 
-            GameStateManager.Source.ChangeState(GameState.OnAntivirusEvent);
+            GameManager.Source.ChangeState(GameState.OnAntivirusEvent);
 
             _isActivated = true;
             TypingManager.Source.StartTypingEvent(_textData);
@@ -24,7 +24,7 @@ namespace Virus
         {
             TypingManager.Source.OnTypingCompleted -= HandleEventCompleted;
             TypingManager.Source.DeactivateUI();
-            GameStateManager.Source.ChangeState(GameState.OnPlay);
+            GameManager.Source.ChangeState(GameState.OnPlay);
         }
 
         private void OnDisable()

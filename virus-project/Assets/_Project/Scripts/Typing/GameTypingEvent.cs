@@ -15,7 +15,7 @@ namespace Virus
             if (_isActivated) return;
             if (!other.CompareTag("Player")) return;
 
-            GameStateManager.Source.ChangeState(GameState.OnTyping);
+            GameManager.Source.ChangeState(GameState.OnTyping);
 
             if (_wordsToType.Count == 0) return;
 
@@ -29,7 +29,7 @@ namespace Virus
             if (_currentWordIndex >= _wordsToType.Count)
             {
                 TypingManager.Source.DeactivateUI();
-                GameStateManager.Source.ChangeState(GameState.OnPlay);
+                GameManager.Source.ChangeState(GameState.OnPlay);
                 return;
             }
 
