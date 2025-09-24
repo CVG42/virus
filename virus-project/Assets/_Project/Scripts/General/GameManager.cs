@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Virus
 {
-    public class GameStateManager : Singleton<IStateSource>, IStateSource
+    public class GameManager : Singleton<IGameSource>, IGameSource
     {
         public GameState CurrentGameState { get; private set; }
 

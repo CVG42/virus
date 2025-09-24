@@ -6,7 +6,7 @@ namespace Virus
     {
         private void Start()
         {
-            GameStateManager.Source.ChangeState(GameState.OnPlay);
+            GameManager.Source.ChangeState(GameState.OnPlay);
         }
     }
 }
