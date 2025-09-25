@@ -42,10 +42,10 @@ In order to start coding, the following packages need to be included in the Unit
 - [UniTask](https://github.com/Cysharp/UniTask)
 
 ## Game Flow Manager
-According to the [Game Structure](https://github.com/CVG42/virus/blob/game-flow-dev/dev-log/Week%201/Game%20Structure), the managers will be using the singleton design pattern, so we created the `FlowManager.cs` and its respective interface `IFlowSource.cs`. The flow manager has the function of changing scenes whenever it's required using an async method and it's also in control of the scene transition effect.
+According to the [Game Setup](https://github.com/CVG42/virus/blob/game-flow-dev/dev-log/Week%201/Game%20Setup.md), the managers will be using the singleton design pattern, so we created the `FlowManager.cs` and its respective interface `IFlowSource.cs`. The flow manager has the function of changing scenes whenever it's required using an async method and it's also in control of the scene transition effect.
 
 As for now we have a very simple fade scene transition made with DOTWeen and its property `DOFade`, in which we specify the initial and finaly opacity and its transition time.
-```
+```csharp
 private async UniTask LoadSceneAsync(string sceneName)
 {
     _fadeTransitionCanvasGroup.gameObject.SetActive(true);
@@ -60,7 +60,7 @@ private async UniTask LoadSceneAsync(string sceneName)
 
 ## Game Manager
 In many games, a `GameManager.cs` script is needed in order to keep control of the states of the game. The different states can listed as an enum. In this case we have the following:
-```
+```csharp
 public enum GameState
 {
     OnPlay,
@@ -80,4 +80,45 @@ This script has the function of chaging the state of the game when needed with t
 > The game manager of this project will continue to expand as the game develops. 
 
 ## UI Manager
-The UI Manager in this project controls the interactive UI elements of the game. 
+The UI Manager in this project controls the interactive UI elements of the game. As for now it only works with buttons, but can be expanded to work with any UI element. It registers every button which contains a key using a dictionary this way `Dictionary<string, Button> _buttonRegistry`. The registration function should look like this and can be referenced in every scene:
+
+```csharp
+public void RegisterButton(string key, Button button)
+{
+  if (_buttonRegistry.ContainsKey(key))
+  {
+     _buttonRegistry[key] = button;
+  }
+     else
+  {
+     _buttonRegistry.Add(key, button);
+  }
+}
+```
+The script also contains functions to enable and disable buttons depending on the behaviour they want.
+```
+public abstract class UIActionData : ScriptableObject
+{
+  public abstract void Execute();
+}
+```
+This system works based around Scriptable Objects, the main script is an abstract class with a function called `Execute()`, this way depending on the way you want to use a button you can create a override the function in its corresponding script, just like the game's _Start_ button:
+```csharp
+[CreateAssetMenu(menuName = "UI/Actions/Change Scene Button", fileName = "newButton")]
+public class ChangeSceneAction : UIActionData
+{
+  [SerializeField] private string _sceneName;
+
+  public override void Execute()
+  {
+     FlowManager.Source.LoadScene(_sceneName);
+  }
+}
+```
+In the inspector the user can create the button's scriptable object.
+
+![Inspector](../images/UI-SO-Inspector.png)
+
+Finally in order to add the functionality to the button we have the connection between it and the `UIManager`. The `UIButtonConnector.cs` registers the button and adds the listeners to the button's execute function. In the inspector the user has to write the key and the corresponding scriptable object.
+
+![Inpector values](../images/UIConnector.png)
