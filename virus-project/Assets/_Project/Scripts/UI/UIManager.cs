@@ -7,6 +7,8 @@ namespace Virus
 {
     public class UIManager : Singleton<IUISource>, IUISource
     {
+        [SerializeField] private GameObject _settingsCanvas;
+
         private Dictionary<string, Button> _buttonRegistry = new();
         private bool _isButtonLocked = false;
 
@@ -60,6 +62,24 @@ namespace Virus
         public async UniTask UnlockAfterDelayAsync(int delay)
         {
             await UniTask.Delay(delay);
+            UnlockAllButtons();
+        }
+
+        public void OpenSettingsScreen()
+        {
+            LockAllButtons();
+
+            foreach (var button in _settingsCanvas.GetComponentsInChildren<Button>(true))
+            {
+                button.interactable = true;
+            }
+
+            _settingsCanvas.SetActive(true);
+        }
+
+        public void CloseSettingsScreen()
+        {
+            _settingsCanvas.SetActive(false);
             UnlockAllButtons();
         }
     }
