@@ -10,5 +10,7 @@ namespace Virus
         void LockAllButtons();
         void UnlockAllButtons();
         UniTask UnlockAfterDelayAsync(int delay);
+        void OpenSettingsScreen();
+        void CloseSettingsScreen();
     }
 }
