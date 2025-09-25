@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BasePlayer
   m_EditorClassIdentifier: 
   _moveSpeed: 5
-  _jumpForce: 10
-  _fallMultiplier: 2.5
-  _ascendMultiplier: 2
+  _jumpForce: 15
+  _fallMultiplier: 3
+  _ascendMultiplier: 3
   _rotationSpeed: 10
   _groundLayer:
     serializedVersion: 2
