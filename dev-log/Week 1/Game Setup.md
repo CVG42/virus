@@ -1,7 +1,12 @@
 # Project Setup
 This provides an overview of the way the project was set up. It also describes the technologies that were used and the packages that need to be added to the project.
 
-## GitHub repository
+### Content
+- [GitHub Repository](#github-repository)
+- [Unity Project](#unity-project)
+- [Singleton](#singleton)
+
+## GitHub Repository
 Before creating the Unity project, the GitHub repository was set up. Every developer will use [Fork](https://git-fork.com/) as their Git client in a desktop environment.
 
 ### Guidelines
