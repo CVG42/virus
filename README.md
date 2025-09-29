@@ -27,7 +27,9 @@ This is a vertical slice project developed by *Video Game Development* students.
 
 ## Project Features
 - Team Planning in Notion — Milestones and weekly tasks organized in a Notion teamspace.
+![Notion board image](dev-log/images/milestones.png)
 - Project Management — Kanban methodology using GitHub Projects.
+![Github project image](dev-log/images/kanban.png)
 - Game Design Document (GDD) — A comprehensive document detailing every single feature and mechanic of the game.
 
 ## Technical Features
