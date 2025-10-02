@@ -51,6 +51,7 @@ namespace Virus
                 if (Input.GetKeyDown(key))
                 {
                     char pressed = key.ToString()[0];
+                    Debug.Log(pressed);
                     OnShootLetterPressed?.Invoke(pressed);
                     break;
                 }
