@@ -34,13 +34,13 @@ namespace Virus
         private void Update()
         {
             GroundCheck();
-            RotatePlayer();
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
             ApplyJumpPhysics();
+            RotatePlayer();
         }
 
         private void OnDestroy()
