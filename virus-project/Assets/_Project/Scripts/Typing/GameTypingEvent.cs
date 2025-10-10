@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Virus
     public class GameTypingEvent : MonoBehaviour
     {
         [SerializeField] private List<TextData> _wordsToType;
+
+        public event Action OnTypingCompleted;
 
         private int _currentWordIndex = 0;
         private bool _isActivated = false;
@@ -29,6 +32,7 @@ namespace Virus
             if (_currentWordIndex >= _wordsToType.Count)
             {
                 TypingManager.Source.DeactivateUI();
+                OnTypingCompleted?.Invoke();
                 GameManager.Source.ChangeState(GameState.OnPlay);
                 return;
             }
