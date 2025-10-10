@@ -13,11 +13,9 @@ namespace Virus
 
         private Vector3 _startPosition;
         private Tween _moveTween;
-        private Rigidbody _rigidbody;
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _startPosition = transform.position;
         }
 
@@ -42,25 +40,10 @@ namespace Virus
 
             Vector3 targetPosition = _startPosition + targetOffset;
 
-            _moveTween = _rigidbody.DOMove(targetPosition, _duration)
+            _moveTween = transform.DOMove(targetPosition, _duration)
                 .SetEase(_easeType)
-                .SetLoops(-1, LoopType.Yoyo);
-        }
-
-        private void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                other.transform.SetParent(transform, true);
-            }
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                other.transform.SetParent(null, true);
-            }
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetUpdate(UpdateType.Fixed);
         }
 
         private void OnDestroy()

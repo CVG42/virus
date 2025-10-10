@@ -31,14 +31,10 @@ namespace Virus
             Cursor.visible = false;
         }
 
-        private void Update()
-        {
-            GroundCheck();
-        }
-
         private void FixedUpdate()
         {
             MovePlayer();
+            GroundCheck();
             ApplyJumpPhysics();
             RotatePlayer();
         }
@@ -57,7 +53,7 @@ namespace Virus
             }
             else
             {
-                _groundCheckTimer -= Time.deltaTime;
+                _groundCheckTimer -= Time.fixedDeltaTime;
             }
         }
 
@@ -109,7 +105,7 @@ namespace Virus
             if (inputDirection.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _playerVariables.RotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _playerVariables.RotationSpeed * Time.fixedDeltaTime);
             }
         }
     }

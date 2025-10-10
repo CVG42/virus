@@ -84,7 +84,7 @@ namespace Virus
         public void StartTypingEvent(TextData textData)
         {          
             _textData = textData;
-            _targetText = _textData.textToType.ToUpper();
+            _targetText = _textData.textToType.Replace("\r\n", "\n").Replace("\r", "\n").ToUpper();
             _currentIndex = 0;
 
             ActivateUI();
