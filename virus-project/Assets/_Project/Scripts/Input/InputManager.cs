@@ -72,11 +72,24 @@ namespace Virus
                         continue;
                     }
 
-                    if (c == '\n' || c == '\r') continue;
+                    if (c == '\n' || c == '\r')
+                    {
+                        continue; 
+                    }
 
                     OnTypingKeyPressed?.Invoke(c);
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                OnTypingKeyPressed?.Invoke('\n');
+            }
+
+            if (Input.GetKeyDown(KeyCode.KeypadDivide)) OnTypingKeyPressed?.Invoke('/');
+            if (Input.GetKeyDown(KeyCode.KeypadMultiply)) OnTypingKeyPressed?.Invoke('*');
+            if (Input.GetKeyDown(KeyCode.KeypadPeriod)) OnTypingKeyPressed?.Invoke('.');
+            if (Input.GetKeyDown(KeyCode.KeypadMinus)) OnTypingKeyPressed?.Invoke('-');
         }
 
         private void ResetInputValues()
