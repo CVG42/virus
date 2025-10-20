@@ -12,7 +12,12 @@ namespace Virus
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private LayerMask _groundLayer;
 
-        public float MoveSpeed => _moveSpeed;
+        public float MoveSpeed
+        {
+            get => _moveSpeed;
+            set => _moveSpeed = value;
+        }
+
         public float JumpForce => _jumpForce;
         public float FallMultiplier => _fallMultiplier;
         public float AscendMultiplier => _ascendMultiplier;

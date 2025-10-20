@@ -5,14 +5,16 @@ namespace Virus
     public class EnemyBullet : MonoBehaviour
     {
         [SerializeField] private float _speed = 20f;
+        [SerializeField] private EnemyData _damageData;
         
         private float _lifeTime = 2f;
         private float _timer;
         private PlayerController _target;
 
-        public void Initialize(PlayerController player)
+        public void Initialize(PlayerController player, EnemyData data)
         {
             _target = player;
+            _damageData = data;
             _timer = _lifeTime;
         }
 
@@ -42,6 +44,20 @@ namespace Virus
         {
             _timer -= Time.deltaTime;
             if (_timer <= 0f)
+            {
+                ObjectPoolManager.Source.Return(gameObject);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                EnemyManager.Source.Attack(_damageData.AttackDamage);
+
+                ObjectPoolManager.Source.Return(gameObject);
+            }
+            else if (!other.CompareTag("Enemy"))
             {
                 ObjectPoolManager.Source.Return(gameObject);
             }

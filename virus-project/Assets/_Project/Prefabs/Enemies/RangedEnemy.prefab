@@ -422,6 +422,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 868327541041327087, guid: af232ac497c6f3046bca7ec0de1bac9c,
     type: 3}
   _firePoint: {fileID: 284988130556241964}
+  _bulletData: {fileID: 11400000, guid: a4ca5aa28c371fe4baeb95a7884cfb6a, type: 2}
   _detectionRange: 10
   _fireRate: 1
   _rotateTowardPlayer: 1
