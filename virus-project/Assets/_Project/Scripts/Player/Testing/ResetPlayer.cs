@@ -15,9 +15,14 @@ namespace Virus
         {
             if (other.CompareTag("Pit"))
             {
-                transform.position = _startPosition;
-                transform.rotation = Quaternion.identity;
+                ResetTransform();
             }
+        }
+
+        private void ResetTransform()
+        {
+            transform.position = _startPosition;
+            transform.rotation = Quaternion.identity;
         }
     }
 }

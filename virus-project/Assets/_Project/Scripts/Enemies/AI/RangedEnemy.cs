@@ -9,7 +9,8 @@ namespace Virus
         [Header("References")]
         [SerializeField] private PlayerController _targetPlayer; 
         [SerializeField] private GameObject _bulletPrefab;       
-        [SerializeField] private Transform _firePoint;           
+        [SerializeField] private Transform _firePoint;
+        [SerializeField] private EnemyData _bulletData;
 
         [Header("Settings")]
         [SerializeField] private float _detectionRange = 10f;
@@ -79,8 +80,7 @@ namespace Virus
 
         private void Fire()
         {
-            if (_bulletPrefab == null || _firePoint == null || _targetPlayer == null)
-                return;
+            if (_bulletPrefab == null || _firePoint == null || _targetPlayer == null) return;
 
             GameObject bullet = ObjectPoolManager.Source.Borrow(_bulletPrefab);
             bullet.transform.position = _firePoint.position;
@@ -88,7 +88,7 @@ namespace Virus
             bullet.SetActive(true);
 
             if (bullet.TryGetComponent(out EnemyBullet enemyBullet))
-                enemyBullet.Initialize(_targetPlayer);
+                enemyBullet.Initialize(_targetPlayer, _bulletData);
         }
 
 #if UNITY_EDITOR

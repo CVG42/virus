@@ -14,6 +14,11 @@ namespace Virus
         [SerializeField] private Image _timerBar;
         [SerializeField] private float _timeLimit = 10f;
 
+        [Header("Fullscreen effects")]
+        [SerializeField] private TerminalTimerEffect _timerEffect;
+        [SerializeField] private FullScreenPassRendererFeature _screenPassRendererFeature;
+        [SerializeField] private TerminalShake _terminalShake;
+
         public event Action OnHackCompleted;
 
         private bool _isActivated = false;
@@ -31,6 +36,7 @@ namespace Virus
             TypingManager.Source.StartTypingEvent(_textData);
             TypingManager.Source.OnTypingCompleted += HandleEventCompleted;
 
+            _screenPassRendererFeature.SetActive(true);
             _barCanvas.SetActive(true);
             _timerBar.fillAmount = 1f;
 
@@ -40,6 +46,7 @@ namespace Virus
 
             _cts = new CancellationTokenSource();
             RunTimerAsync(_cts.Token).Forget();
+            RunEffectPulseAsync(_cts.Token).Forget();
         }
 
         private void HandleEventCompleted()
@@ -71,6 +78,7 @@ namespace Virus
                 _timer.Stop();
             }
 
+            _screenPassRendererFeature.SetActive(false);
             _barCanvas.SetActive(false);
 
             TypingManager.Source.OnTypingCompleted -= HandleEventCompleted;
@@ -82,6 +90,9 @@ namespace Virus
 
         private async UniTaskVoid RunTimerAsync(CancellationToken token)
         {
+            float elapsed = 0f;
+            float nextPulse = 1f;
+
             try
             {
                 while (_timer.IsRunning && !token.IsCancellationRequested)
@@ -90,6 +101,14 @@ namespace Virus
 
                     if (_timerBar != null)
                         _timerBar.fillAmount = _timer.Progress;
+
+                    elapsed += Time.deltaTime;
+
+                    if (elapsed >= nextPulse)
+                    {
+                        _terminalShake?.Shake();
+                        nextPulse += 1f;
+                    }
 
                     await UniTask.Yield(PlayerLoopTiming.Update, token);
                 }
@@ -100,6 +119,23 @@ namespace Virus
             catch (OperationCanceledException)
             {
                 // Expected if event ends early
+            }
+        }
+
+        private async UniTaskVoid RunEffectPulseAsync(CancellationToken token)
+        {
+            try
+            {
+                while (_timer.IsRunning && !token.IsCancellationRequested)
+                {
+                    _timerEffect.TriggerScreenDamage(UnityEngine.Random.Range(0.1f, 0.6f));
+
+                    await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // expected if event ends early
             }
         }
 

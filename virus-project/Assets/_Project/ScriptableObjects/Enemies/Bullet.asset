@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da91e4f5815c6a9459751c63c2ef125d, type: 3}
-  m_Name: AntivirusTest
+  m_Script: {fileID: 11500000, guid: 4c6c98c09634bec47be553c6c1fdd1e6, type: 3}
+  m_Name: Bullet
   m_EditorClassIdentifier: 
-  textToType: sigshift --duck 0x4f2
+  AttackDamage: 1
+  EnemyHealth: 0
