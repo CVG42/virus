@@ -6,6 +6,7 @@ namespace Virus
     {
         event Action OnJumpButtonPressed;
         event Action OnBackspacePressed;
+        event Action OnTerminalActivationPressed;
         event Action<char> OnShootLetterPressed;
         event Action<char> OnTypingKeyPressed;
 
