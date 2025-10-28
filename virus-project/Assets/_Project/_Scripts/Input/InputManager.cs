@@ -10,6 +10,7 @@ namespace Virus
 
         public event Action OnJumpButtonPressed;
         public event Action OnBackspacePressed;
+        public event Action OnTerminalActivationPressed;
         public event Action<char> OnTypingKeyPressed;
         public event Action<char> OnShootLetterPressed;
 
@@ -19,6 +20,7 @@ namespace Virus
         private void Update()
         {
             CheckMovementInput();
+            CheckTerminalActivationInput();
             CheckShootingInput();
             CheckTypingInput();
         }
@@ -37,6 +39,16 @@ namespace Virus
             if (Input.GetButtonDown("Jump"))
             {
                 OnJumpButtonPressed?.Invoke();
+            }
+        }
+
+        private void CheckTerminalActivationInput()
+        {
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay) return;
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                OnTerminalActivationPressed?.Invoke();
             }
         }
 
