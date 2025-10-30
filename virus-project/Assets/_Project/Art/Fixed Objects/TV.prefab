@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7056177839554122528}
   - component: {fileID: 929353861802916981}
   m_Layer: 0
-  m_Name: Tele
+  m_Name: TV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
