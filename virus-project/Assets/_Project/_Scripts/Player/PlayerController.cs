@@ -5,6 +5,7 @@ namespace Virus
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerInputVariables _playerVariables;
+        [SerializeField] private Animator _animator;
 
         private bool _isGrounded = true;
         private float _groundCheckTimer = 0f;
@@ -29,6 +30,11 @@ namespace Virus
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        private void Update()
+        {
+            UpdateAnimations();
         }
 
         private void FixedUpdate()
@@ -106,6 +112,34 @@ namespace Virus
             {
                 Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _playerVariables.RotationSpeed * Time.fixedDeltaTime);
+            }
+        }
+
+        private void UpdateAnimations()
+        {
+            Vector3 flatVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+            float speed = flatVelocity.magnitude;
+
+            _animator.SetFloat("Speed", speed);
+            _animator.SetBool("isGrounded", _isGrounded);
+
+            if (!_isGrounded)
+            {
+                if (_rigidbody.velocity.y > 0.1f)
+                {
+                    _animator.SetBool("isJumping", true);
+                    _animator.SetBool("isFalling", false);
+                }
+                else if (_rigidbody.velocity.y < -0.1f)
+                {
+                    _animator.SetBool("isJumping", false);
+                    _animator.SetBool("isFalling", true);
+                }
+            }
+            else
+            {
+                _animator.SetBool("isJumping", false);
+                _animator.SetBool("isFalling", false);
             }
         }
     }
