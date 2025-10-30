@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c6c98c09634bec47be553c6c1fdd1e6, type: 3}
-  m_Name: Melee
+  m_Name: Robot
   m_EditorClassIdentifier: 
-  AttackDamage: 2
-  EnemyHealth: 1
+  AttackDamage: 0
+  EnemyHealth: 2
