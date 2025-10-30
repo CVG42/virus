@@ -66,8 +66,6 @@ namespace Virus
 
         private void EndEvent()
         {
-            _isActivated = false;
-
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = null;
