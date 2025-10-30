@@ -59,7 +59,7 @@ namespace Virus
         {
             if (!_isActivated) return;
 
-            Debug.Log("Player failed to complete typing.");
+            EnemyManager.Source.Attack(10);
 
             EndEvent();
         }
