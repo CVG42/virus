@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7923274875761844648}
   - component: {fileID: 6936501359765233193}
   m_Layer: 0
-  m_Name: pCube23
+  m_Name: Motherboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
