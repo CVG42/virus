@@ -5,6 +5,7 @@ namespace Virus
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerInputVariables _playerVariables;
+        [SerializeField] private Animator _animator;
 
         private bool _isGrounded = true;
         private float _groundCheckTimer = 0f;
@@ -13,6 +14,7 @@ namespace Virus
         private float _raycastDistance;
 
         private Rigidbody _rigidbody;
+        private bool _isPaused;
 
         private void Awake()
         {
@@ -27,12 +29,22 @@ namespace Virus
 
             InputManager.Source.OnJumpButtonPressed += Jump;
 
+            GameManager.Source.OnGamePaused += PausePlayer;
+            GameManager.Source.OnGameUnpaused += ResumePlayer;
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
+        private void Update()
+        {
+            if (_isPaused) return;
+            UpdateAnimations();
+        }
+
         private void FixedUpdate()
         {
+            if (_isPaused) return;
             MovePlayer();
             GroundCheck();
             ApplyJumpPhysics();
@@ -42,6 +54,8 @@ namespace Virus
         private void OnDestroy()
         {
             InputManager.Source.OnJumpButtonPressed -= Jump;
+            GameManager.Source.OnGamePaused -= PausePlayer;
+            GameManager.Source.OnGameUnpaused -= ResumePlayer;
         }
 
         private void GroundCheck()
@@ -107,6 +121,53 @@ namespace Virus
                 Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _playerVariables.RotationSpeed * Time.fixedDeltaTime);
             }
+        }
+
+        private void UpdateAnimations()
+        {
+            Vector3 flatVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+            float speed = flatVelocity.magnitude;
+
+            _animator.SetFloat("Speed", speed);
+            _animator.SetBool("isGrounded", _isGrounded);
+
+            if (!_isGrounded)
+            {
+                if (_rigidbody.velocity.y > 0.1f)
+                {
+                    _animator.SetBool("isJumping", true);
+                    _animator.SetBool("isFalling", false);
+                }
+                else if (_rigidbody.velocity.y < -0.1f)
+                {
+                    _animator.SetBool("isJumping", false);
+                    _animator.SetBool("isFalling", true);
+                }
+            }
+            else
+            {
+                _animator.SetBool("isJumping", false);
+                _animator.SetBool("isFalling", false);
+            }
+
+            if (GameManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
+            {
+                _animator.speed = 0f;
+            }
+        }
+
+        private void PausePlayer()
+        {
+            _isPaused = true;
+            _rigidbody.isKinematic = true;
+            _animator.speed = 0f;
+        }
+
+        private void ResumePlayer()
+        {
+            _isPaused = false;
+            _rigidbody.isKinematic = false;
+            _animator.speed = 1f;
         }
     }
 }

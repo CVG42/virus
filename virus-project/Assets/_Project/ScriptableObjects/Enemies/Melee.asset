@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Melee
   m_EditorClassIdentifier: 
   AttackDamage: 2
-  EnemyHealth: 2
+  EnemyHealth: 1

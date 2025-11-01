@@ -8,28 +8,41 @@ namespace Virus
     {
         public GameState CurrentGameState { get; private set; }
 
+        public event Action OnGamePaused;
+        public event Action OnGameUnpaused;
         public event Action<GameState> OnGameStateChanged;
 
+        private GameState _previousState;
+        
         public void ChangeState(GameState state)
         {
             if (CurrentGameState == state) return;
 
+            if (state == GameState.OnPause)
+            {
+                _previousState = CurrentGameState;
+            }
+
             CurrentGameState = state;
             OnGameStateChanged?.Invoke(CurrentGameState);
+
+            CheckPauseState(state);
         }
 
-        private void SetPauseState()
+        public void ResumePreviousState()
         {
-            if (SceneManager.GetActiveScene().name == "MainMenu") return;
+            ChangeState(_previousState);
+        }
 
-            switch (CurrentGameState)
+        private void CheckPauseState(GameState state)
+        {
+            if (state == GameState.OnPause)
             {
-                case GameState.OnPlay:
-                    ChangeState(GameState.OnPause);
-                    break;
-                case GameState.OnPause:
-                    ChangeState(GameState.OnPlay);
-                    break;
+                OnGamePaused?.Invoke();
+            }
+            else
+            {
+                OnGameUnpaused?.Invoke();
             }
         }
     }

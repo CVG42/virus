@@ -10,6 +10,19 @@ namespace Virus
         private float _lifeTime = 2f;
         private float _timer;
         private PlayerController _target;
+        private bool _isPaused = false;
+
+        private void OnEnable()
+        {
+            GameManager.Source.OnGamePaused += PauseBullet;
+            GameManager.Source.OnGameUnpaused += ResumeBullet;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Source.OnGamePaused -= PauseBullet;
+            GameManager.Source.OnGameUnpaused -= ResumeBullet;
+        }
 
         public void Initialize(PlayerController player, EnemyData data)
         {
@@ -20,6 +33,8 @@ namespace Virus
 
         private void Update()
         {
+            if (_isPaused) return;
+
             if (_target == null)
             {
                 ObjectPoolManager.Source.Return(gameObject);
@@ -61,6 +76,16 @@ namespace Virus
             {
                 ObjectPoolManager.Source.Return(gameObject);
             }
+        }
+
+        private void PauseBullet()
+        {
+            _isPaused = true;
+        }
+
+        private void ResumeBullet()
+        {
+            _isPaused = false;
         }
     }
 }

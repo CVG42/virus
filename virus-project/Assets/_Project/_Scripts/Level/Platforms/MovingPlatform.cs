@@ -46,6 +46,27 @@ namespace Virus
                 .SetUpdate(UpdateType.Fixed);
         }
 
+        private void Update()
+        {
+            if (_moveTween == null) return;
+
+            PausePlatforms();
+        }
+
+        private void PausePlatforms()
+        {
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay)
+            {
+                if (_moveTween.IsPlaying())
+                    _moveTween.Pause();
+            }
+            else
+            {
+                if (!_moveTween.IsPlaying())
+                    _moveTween.Play();
+            }
+        }
+
         private void OnDestroy()
         {
             _moveTween?.Kill();

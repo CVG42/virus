@@ -11,11 +11,13 @@ namespace Virus
         public event Action OnJumpButtonPressed;
         public event Action OnBackspacePressed;
         public event Action OnTerminalActivationPressed;
+        public event Action OnPauseButtonPressed;
         public event Action<char> OnTypingKeyPressed;
         public event Action<char> OnShootLetterPressed;
 
         private float _moveForward;
         private float _moveHorizontal;
+        private bool _isPaused;
 
         private void Update()
         {
@@ -23,6 +25,7 @@ namespace Virus
             CheckTerminalActivationInput();
             CheckShootingInput();
             CheckTypingInput();
+            CheckPauseInput();
         }
 
         private void CheckMovementInput()
@@ -102,6 +105,24 @@ namespace Virus
             if (Input.GetKeyDown(KeyCode.KeypadMultiply)) OnTypingKeyPressed?.Invoke('*');
             if (Input.GetKeyDown(KeyCode.KeypadPeriod)) OnTypingKeyPressed?.Invoke('.');
             if (Input.GetKeyDown(KeyCode.KeypadMinus)) OnTypingKeyPressed?.Invoke('-');
+        }
+
+        private void CheckPauseInput()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (!_isPaused)
+                {
+                    OnPauseButtonPressed?.Invoke();
+                    _isPaused = true;
+                    GameManager.Source.ChangeState(GameState.OnPause);
+                }
+                else if (_isPaused)
+                {
+                    _isPaused = false;
+                    GameManager.Source.ResumePreviousState();
+                }
+            }
         }
 
         private void ResetInputValues()
