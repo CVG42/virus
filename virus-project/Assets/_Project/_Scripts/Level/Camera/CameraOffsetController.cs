@@ -37,6 +37,8 @@ namespace Virus
 
         private void CheckBackwardMovement()
         {
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay) return;
+
             bool isBackwardPressed = Input.GetAxisRaw("Vertical") < -0.1f;
 
             if (isBackwardPressed && !_isMovingBackward)

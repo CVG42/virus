@@ -59,8 +59,7 @@ namespace Virus
         {
             if (!_isActivated) return;
 
-            EnemyManager.Source.Attack(10);
-
+            EnemyManager.Source.Attack(5);
             EndEvent();
         }
 
@@ -93,12 +92,21 @@ namespace Virus
 
             try
             {
-                while (_timer.IsRunning && !token.IsCancellationRequested)
+                while (!token.IsCancellationRequested)
                 {
-                    _timer.Tick(Time.deltaTime);
+                    if (GameManager.Source.CurrentGameState == GameState.OnPause)
+                    {
+                        await UniTask.Yield(PlayerLoopTiming.Update, token);
+                        continue;
+                    }
 
-                    if (_timerBar != null)
-                        _timerBar.fillAmount = _timer.Progress;
+                    if (_timer.IsRunning)
+                    {
+                        _timer.Tick(Time.deltaTime);
+
+                        if (_timerBar != null)
+                            _timerBar.fillAmount = _timer.Progress;
+                    }
 
                     elapsed += Time.deltaTime;
 
@@ -108,33 +116,46 @@ namespace Virus
                         nextPulse += 1f;
                     }
 
+                    if (_timer.IsFinished)
+                    {
+                        HandleTimerStopped();
+                        break;
+                    }
+
                     await UniTask.Yield(PlayerLoopTiming.Update, token);
                 }
-
-                if (_timer.IsFinished && !token.IsCancellationRequested)
-                    HandleTimerStopped();
             }
-            catch (OperationCanceledException)
-            {
-                // Expected if event ends early
-            }
+            catch (OperationCanceledException) { }
         }
 
         private async UniTaskVoid RunEffectPulseAsync(CancellationToken token)
         {
+            float pulseTimer = 0f;
+
             try
             {
-                while (_timer.IsRunning && !token.IsCancellationRequested)
+                while (!token.IsCancellationRequested)
                 {
-                    _timerEffect.TriggerScreenDamage(UnityEngine.Random.Range(0.1f, 0.6f));
+                    if (GameManager.Source.CurrentGameState == GameState.OnPause)
+                    {
+                        await UniTask.Yield(PlayerLoopTiming.Update, token);
+                        continue;
+                    }
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: token);
+                    pulseTimer += Time.deltaTime;
+                    if (pulseTimer >= 1f)
+                    {
+                        _timerEffect.TriggerScreenDamage(UnityEngine.Random.Range(0.1f, 0.6f));
+                        pulseTimer = 0f;
+                    }
+
+                    if (_timer.IsFinished)
+                        break;
+
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // expected if event ends early
-            }
+            catch (OperationCanceledException) { }
         }
 
         private void OnDisable()

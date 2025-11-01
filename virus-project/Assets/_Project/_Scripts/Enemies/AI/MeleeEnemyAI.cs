@@ -43,6 +43,16 @@ namespace Virus
 
         void Update()
         {
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay)
+            {
+                if (agent.enabled) agent.isStopped = true;
+                animator.speed = 0f;
+                return;
+            }
+
+            if (agent.enabled) agent.isStopped = false;
+            animator.speed = 1f;
+
             cooldownTimer -= Time.deltaTime;
 
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);

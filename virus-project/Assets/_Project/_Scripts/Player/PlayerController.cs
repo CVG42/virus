@@ -14,6 +14,7 @@ namespace Virus
         private float _raycastDistance;
 
         private Rigidbody _rigidbody;
+        private bool _isPaused;
 
         private void Awake()
         {
@@ -28,17 +29,22 @@ namespace Virus
 
             InputManager.Source.OnJumpButtonPressed += Jump;
 
+            GameManager.Source.OnGamePaused += PausePlayer;
+            GameManager.Source.OnGameUnpaused += ResumePlayer;
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
         private void Update()
         {
+            if (_isPaused) return;
             UpdateAnimations();
         }
 
         private void FixedUpdate()
         {
+            if (_isPaused) return;
             MovePlayer();
             GroundCheck();
             ApplyJumpPhysics();
@@ -48,6 +54,8 @@ namespace Virus
         private void OnDestroy()
         {
             InputManager.Source.OnJumpButtonPressed -= Jump;
+            GameManager.Source.OnGamePaused -= PausePlayer;
+            GameManager.Source.OnGameUnpaused -= ResumePlayer;
         }
 
         private void GroundCheck()
@@ -141,6 +149,25 @@ namespace Virus
                 _animator.SetBool("isJumping", false);
                 _animator.SetBool("isFalling", false);
             }
+
+            if (GameManager.Source.CurrentGameState == GameState.OnAntivirusEvent)
+            {
+                _animator.speed = 0f;
+            }
+        }
+
+        private void PausePlayer()
+        {
+            _isPaused = true;
+            _rigidbody.isKinematic = true;
+            _animator.speed = 0f;
+        }
+
+        private void ResumePlayer()
+        {
+            _isPaused = false;
+            _rigidbody.isKinematic = false;
+            _animator.speed = 1f;
         }
     }
 }
