@@ -12,20 +12,23 @@ namespace Virus
         public event Action OnBackspacePressed;
         public event Action OnTerminalActivationPressed;
         public event Action OnPauseButtonPressed;
+        public event Action OnConfirmButtonPressed;
         public event Action<char> OnTypingKeyPressed;
         public event Action<char> OnShootLetterPressed;
+        public event Action<char> OnTypingKeyPressedInPlay;
 
         private float _moveForward;
         private float _moveHorizontal;
-        private bool _isPaused;
 
         private void Update()
         {
             CheckMovementInput();
             CheckTerminalActivationInput();
             CheckShootingInput();
+            CheckOnPlayTypingInput();
             CheckTypingInput();
             CheckPauseInput();
+            CheckEnterInput();
         }
 
         private void CheckMovementInput()
@@ -107,21 +110,48 @@ namespace Virus
             if (Input.GetKeyDown(KeyCode.KeypadMinus)) OnTypingKeyPressed?.Invoke('-');
         }
 
+        private void CheckOnPlayTypingInput()
+        {
+            if (GameManager.Source.CurrentGameState != GameState.OnPlay) return;
+
+            if (!string.IsNullOrEmpty(Input.inputString))
+            {
+                foreach (char c in Input.inputString)
+                {
+                    if (c == '\b') continue;
+                    if (c == '\n' || c == '\r') continue;
+
+                    OnTypingKeyPressedInPlay?.Invoke(c);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                OnTypingKeyPressedInPlay?.Invoke('\n');
+        }
+
         private void CheckPauseInput()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (!_isPaused)
+                if (GameManager.Source.CurrentGameState != GameState.OnPause)
                 {
                     OnPauseButtonPressed?.Invoke();
-                    _isPaused = true;
                     GameManager.Source.ChangeState(GameState.OnPause);
                 }
-                else if (_isPaused)
+                else
                 {
-                    _isPaused = false;
                     GameManager.Source.ResumePreviousState();
                 }
+            }
+        }
+
+        private void CheckEnterInput()
+        {
+            if (GameManager.Source.CurrentGameState != GameState.OnDialogue) return;
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                OnConfirmButtonPressed?.Invoke();
             }
         }
 
