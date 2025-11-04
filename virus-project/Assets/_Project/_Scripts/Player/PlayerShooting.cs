@@ -36,6 +36,7 @@ namespace Virus
 
         private void Shoot(EnemyController enemy)
         {
+            AudioManager.Source.PlayShootSFX();
             GameObject bullet = ObjectPoolManager.Source.Borrow(_bullet);
             bullet.transform.position = _firePoint.position;
 

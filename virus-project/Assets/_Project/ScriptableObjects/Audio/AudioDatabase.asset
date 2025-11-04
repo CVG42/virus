@@ -15,3 +15,17 @@ MonoBehaviour:
   _audioData:
   - audio: {fileID: 8300000, guid: f489963095fa89943aee704f0b1d49ca, type: 3}
     audioName: Music
+  - audio: {fileID: 8300000, guid: 5fff1d04d1a433046ae4648d15514335, type: 3}
+    audioName: Jump
+  - audio: {fileID: 8300000, guid: 5767e9f00e9fb8a49ac0c841e07b027c, type: 3}
+    audioName: Cookie
+  - audio: {fileID: 8300000, guid: d54776c4bebd0394599f3fcf527e902d, type: 3}
+    audioName: Shoot
+  - audio: {fileID: 8300000, guid: d7e94b751ce3baf4e86037c345b0caea, type: 3}
+    audioName: LaserDamage
+  - audio: {fileID: 8300000, guid: cb865a3b4e72f174e9b91df0e9f396fb, type: 3}
+    audioName: LaserOff
+  - audio: {fileID: 8300000, guid: 1db34763488206d47a9f88f731957ab8, type: 3}
+    audioName: EnemyShoot
+  - audio: {fileID: 8300000, guid: 35000b9243df2ef4fbaa490d32cd53f0, type: 3}
+    audioName: LaserWall

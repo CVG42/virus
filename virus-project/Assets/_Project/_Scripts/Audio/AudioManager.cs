@@ -17,6 +17,7 @@ namespace Virus
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private AudioSource _sfxAudioSource;
         [SerializeField] private AudioSource _bgmAudioSource;
+        [SerializeField] private AudioSource _ambientAudioSource;
 
         public float CurrentSFXVolume { get; private set; }
         public float CurrentMusicVolume { get; private set; }
@@ -98,5 +99,23 @@ namespace Virus
         {
             _sfxAudioSource.PlayOneShot(_audioDatabase.GetAudio(audioName));
         }
+
+        public void PlayAmbientAudio(string audioName)
+        {
+            _ambientAudioSource.clip = _audioDatabase.GetAudio(audioName);
+            _ambientAudioSource.Play();
+        }
+
+        public void StopAmbientAudio()
+        {
+            _ambientAudioSource.Stop();
+        }
+
+        public void PlayJumpSFX() => PlayOneShot("Jump");
+        public void PlayCookieSFX() => PlayOneShot("Cookie");
+        public void PlayShootSFX() => PlayOneShot("Shoot");
+        public void PlayLaserDamageSFX() => PlayOneShot("LaserDamage");
+        public void PlayLaserOffSFX() => PlayOneShot("LaserOff");
+        public void PlayEnemyShootSFX() => PlayOneShot("EnemyShoot");
     }
 }

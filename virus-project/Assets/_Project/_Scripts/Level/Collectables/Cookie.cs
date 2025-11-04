@@ -29,6 +29,7 @@ namespace Virus
 
             if (other.gameObject.CompareTag("Player"))
             {
+                AudioManager.Source.PlayCookieSFX();
                 Collect();
             }
         }

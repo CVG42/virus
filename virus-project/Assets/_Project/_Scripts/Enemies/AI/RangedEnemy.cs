@@ -120,6 +120,7 @@ namespace Virus
             if (_bulletPrefab == null || _firePoint == null || _targetPlayer == null) return;
 
             _animator?.SetTrigger("Shoot");
+            AudioManager.Source.PlayEnemyShootSFX();
 
             GameObject bullet = ObjectPoolManager.Source.Borrow(_bulletPrefab);
             bullet.transform.position = _firePoint.position;
