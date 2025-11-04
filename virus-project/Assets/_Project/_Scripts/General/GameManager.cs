@@ -38,10 +38,14 @@ namespace Virus
         {
             if (state == GameState.OnPause)
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 OnGamePaused?.Invoke();
             }
             else
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 OnGameUnpaused?.Invoke();
             }
         }
@@ -52,6 +56,7 @@ namespace Virus
         OnPlay,
         OnPause,
         OnAntivirusEvent,
-        OnTyping
+        OnTyping,
+        OnDialogue
     }
 }
