@@ -12,18 +12,25 @@ namespace Virus
 
         private int _currentWordIndex = 0;
         private bool _isActivated = false;
+        private bool _forceStayInTypingState = false;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_isActivated) return;
             if (!other.CompareTag("Player")) return;
 
-            GameManager.Source.ChangeState(GameState.OnTyping);
+            StartTypingEvent(false);
+        }
 
+        public void StartTypingEvent(bool stayInTypingState)
+        {
+            if (_isActivated) return;
             if (_wordsToType.Count == 0) return;
 
             _isActivated = true;
+            _forceStayInTypingState = stayInTypingState;
             _currentWordIndex = 0;
+
+            GameManager.Source.ChangeState(GameState.OnTyping);
             StartNextWord();
         }
 
@@ -33,7 +40,12 @@ namespace Virus
             {
                 TypingManager.Source.DeactivateUI();
                 OnTypingCompleted?.Invoke();
-                GameManager.Source.ChangeState(GameState.OnPlay);
+
+                if (!_forceStayInTypingState)
+                {
+                    GameManager.Source.ChangeState(GameState.OnPlay);
+                }
+
                 return;
             }
 
