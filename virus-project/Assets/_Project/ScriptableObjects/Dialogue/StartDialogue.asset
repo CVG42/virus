@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f21eadb88876b448b257480e5a50e9, type: 3}
+  m_Name: StartDialogue
+  m_EditorClassIdentifier: 
+  DialogueLines:
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Great! We just got installed. Someone tried to download more RAM but they
+      got us instead.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: How cute, then I'll give them a memory they won't forget.
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: So I see your name is STX-09, it seems that it's their 9th time gettting
+      some unwanted visitors.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: I don't care, I just want to eat some cookies and crack this system so
+      it'll be MINE!
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Relax, we'll get to it. But look, the screens are also here, they'll show
+      us how to move around and warn about hazards.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: Yeah, yeah, whatever. Let's go.
