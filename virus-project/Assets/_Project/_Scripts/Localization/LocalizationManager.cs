@@ -54,8 +54,6 @@ namespace Virus
 
                 _localizationData[key] = translations;
             }
-
-            Debug.Log($"Loaded {_localizationData.Count} keys from CSV.");
         }
 
         private string[] SplitCsvLine(string line)
