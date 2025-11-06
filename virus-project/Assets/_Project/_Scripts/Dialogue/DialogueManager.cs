@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 namespace Virus
 {
@@ -29,10 +30,13 @@ namespace Virus
         [SerializeField] private RectTransform _dialogueGameplayRectTransform;
         [SerializeField] private Action _onGameplayDialogueEnd;
 
+        public event Action OnCinematicDialogueEnd;
+
         private bool _isCinematicTyping = false, _isGameplayTyping = false, _skipTypingCinematic = false;
         private string _currentSentence = "";
         private readonly Queue<DialogueLine> _cinematicLines = new Queue<DialogueLine>();
         private readonly Queue<DialogueLine> _gameplayLines = new Queue<DialogueLine>();
+        private CancellationTokenSource _gameplayCts;
 
         private void Start()
         {
@@ -42,6 +46,8 @@ namespace Virus
         private void OnDestroy()
         {
             InputManager.Source.OnConfirmButtonPressed -= DisplayNextCinematicDialogueLine;
+            _gameplayCts?.Cancel();
+            _gameplayCts?.Dispose();
         }
 
         public void StartCinematicDialogue(Dialogue dialogue, Action onDialogueEnd)
@@ -119,6 +125,7 @@ namespace Virus
         private void EndCinematicDialogue()
         {
             _onCinematicDialogueEnd?.Invoke();
+            OnCinematicDialogueEnd?.Invoke();
             DisableCinematicDialogue().Forget();
             GameManager.Source.ChangeState(GameState.OnPlay);
         }
@@ -132,6 +139,9 @@ namespace Virus
 
         public void StartGameplayDialogue(Dialogue dialogue, Action onDialogueEnd)
         {
+            _gameplayCts?.Cancel();
+            _gameplayCts = new CancellationTokenSource();
+
             _onGameplayDialogueEnd = onDialogueEnd;
             GameplayDialogues(dialogue);
             EnableGameplayDialogue();
@@ -172,22 +182,27 @@ namespace Virus
 
         private async void TypeGameplaySentence(DialogueLine dialogueline)
         {
-
+            _isGameplayTyping = true;
             _dialogueGameplayArea.text = "";
             _currentSentence = dialogueline.Line.Localize();
 
-            foreach (char letter in _currentSentence)
+            try
             {
-                _dialogueGameplayArea.text += letter;
+                foreach (char letter in _currentSentence)
+                {
+                    _dialogueGameplayArea.text += letter;
+                    await UniTask.Delay(TimeSpan.FromSeconds(_typingGameplaySpeed), DelayType.DeltaTime, cancellationToken: _gameplayCts.Token);
+                }
 
-                await UniTask.Delay(TimeSpan.FromSeconds(_typingGameplaySpeed), DelayType.DeltaTime);
-            }
-            _isGameplayTyping = true;
-
-            if (_isGameplayTyping)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+                await UniTask.Delay(TimeSpan.FromSeconds(1.5f), cancellationToken: _gameplayCts.Token);
                 DisplayNextGameplayDialogueLine();
+            }
+            catch (OperationCanceledException)
+            {
+                // Dialogue was cancelled - this is normal when interrupting
+            }
+            finally
+            {
                 _isGameplayTyping = false;
             }
         }

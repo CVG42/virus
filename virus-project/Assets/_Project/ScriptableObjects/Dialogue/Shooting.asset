@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f21eadb88876b448b257480e5a50e9, type: 3}
+  m_Name: Shooting
+  m_EditorClassIdentifier: 
+  DialogueLines:
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: What?
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Wait, look at the screen on your left..
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: If you type in the letter those enemies have above then, I can shoot them!
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: Alright.
+  - Character: {fileID: 11400000, guid: 7b8fd3591c80f8c458b6ca624633beb1, type: 2}
+    Line: It won't be that easy.

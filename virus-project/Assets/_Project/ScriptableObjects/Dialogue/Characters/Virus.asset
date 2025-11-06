@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68297738b9a3659459f35b4684a35487, type: 3}
   m_Name: Virus
   m_EditorClassIdentifier: 
-  Name: STX-07
-  Icon: {fileID: 21300000, guid: 23b3f5f620c0ca44ea702226c9a37482, type: 3}
+  Name: STX-09
+  Icon: {fileID: 21300000, guid: 99ad638d390549f46861ec45c9b4f0e8, type: 3}
   AudioName: 

@@ -28,4 +28,7 @@ MonoBehaviour:
     Line: Relax, we'll get to it. But look, the screens are also here, they'll show
       us how to move around and warn about hazards.
   - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: We have to find terminal so we can fully inject the virus, it has a PC
+      shape.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
     Line: Yeah, yeah, whatever. Let's go.

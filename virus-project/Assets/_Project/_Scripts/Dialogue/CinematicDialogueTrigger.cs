@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Virus
@@ -6,10 +7,17 @@ namespace Virus
     {
         [SerializeField] private Dialogue _dialogue;
 
+        public event Action OnDialogueCompleted;
+
         private void TriggerDialogue()
         {
             GameManager.Source.ChangeState(GameState.OnDialogue);
-            DialogueManager.Source.StartCinematicDialogue(_dialogue, null);
+            DialogueManager.Source.StartCinematicDialogue(_dialogue, OnDialogueCompleted);
+        }
+
+        private void OnDialogueComplete()
+        {
+            OnDialogueCompleted?.Invoke();
         }
 
         private void OnTriggerEnter(Collider collider)
@@ -21,7 +29,7 @@ namespace Virus
 
                 TriggerDialogue();
 
-                gameObject.SetActive(false);
+                GetComponent<Collider>().enabled = false;
             }
         }
     }
