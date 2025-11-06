@@ -61,6 +61,20 @@ namespace Virus
             StartNextWord();
         }
 
+        public void ForceStopTypingEvent()
+        {
+            TypingManager.Source.DeactivateUI();
+
+            _isActivated = false;
+
+            OnTypingCompleted?.Invoke();
+
+            if (!_forceStayInTypingState)
+            {
+                GameManager.Source.ChangeState(GameState.OnPlay);
+            }
+        }
+
         private void OnDisable()
         {
             TypingManager.Source.OnTypingCompleted -= HandleWordCompleted;

@@ -14,5 +14,7 @@ namespace Virus
         void ClosePauseScreen();
         void OpenSettingsScreen();
         void CloseSettingsScreen();
+        void OpenGameOverScreen();
+        void CloseGameOverScreen();
     }
 }

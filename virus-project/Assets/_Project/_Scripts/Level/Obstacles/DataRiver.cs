@@ -33,6 +33,11 @@ namespace Virus
 
         private async UniTaskVoid LaunchPlayer(GameObject player)
         {
+            if (_typingEvent == null)
+            {
+                return;
+            }
+
             _isLaunching = true;
             _wordsCompleted = false;
 
@@ -51,6 +56,7 @@ namespace Virus
 
             if (!_wordsCompleted)
             {
+                _typingEvent.ForceStopTypingEvent();
                 EnemyManager.Source.Attack(4);
             }
 

@@ -9,6 +9,7 @@ namespace Virus
     {
         [SerializeField] private GameObject _pauseCanvas;
         [SerializeField] private GameObject _settingsCanvas;
+        [SerializeField] private GameObject _gameOverCanvas;
 
         private Dictionary<string, Button> _buttonRegistry = new();
         private bool _isButtonLocked = false;
@@ -121,6 +122,21 @@ namespace Virus
         {
             _settingsCanvas.SetActive(false);
             UnlockAllButtons();
+        }
+
+        public void OpenGameOverScreen()
+        {
+            foreach (var button in _gameOverCanvas.GetComponentsInChildren<Button>(true))
+            {
+                button.interactable = true;
+            }
+
+            _gameOverCanvas.SetActive(true);
+        }
+
+        public void CloseGameOverScreen()
+        {
+            _gameOverCanvas.SetActive(false);
         }
     }
 }

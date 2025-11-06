@@ -36,7 +36,7 @@ namespace Virus
 
         private void CheckPauseState(GameState state)
         {
-            if (state == GameState.OnPause)
+            if (state == GameState.OnPause || state == GameState.OnGameOver)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -57,6 +57,7 @@ namespace Virus
         OnPause,
         OnAntivirusEvent,
         OnTyping,
-        OnDialogue
+        OnDialogue,
+        OnGameOver
     }
 }

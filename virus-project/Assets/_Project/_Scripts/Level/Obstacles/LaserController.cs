@@ -28,7 +28,7 @@ namespace Virus
         {
             if (_typingUI == null) return;
 
-            string correctText = $"<color=blue>{_currentWord.Substring(0, _currentIndex)}</color>";
+            string correctText = $"<color=green>{_currentWord.Substring(0, _currentIndex)}</color>";
             string remainingText = $"<color=black>{_currentWord.Substring(_currentIndex)}</color>";
 
             _typingUI.text = correctText + remainingText;
