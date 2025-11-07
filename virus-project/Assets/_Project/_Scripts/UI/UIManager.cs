@@ -7,10 +7,36 @@ namespace Virus
 {
     public class UIManager : Singleton<IUISource>, IUISource
     {
+        [SerializeField] private GameObject _pauseCanvas;
         [SerializeField] private GameObject _settingsCanvas;
+        [SerializeField] private GameObject _gameOverCanvas;
 
         private Dictionary<string, Button> _buttonRegistry = new();
         private bool _isButtonLocked = false;
+
+        private void Start()
+        {
+            if (GameManager.Source != null)
+            {
+                GameManager.Source.OnGamePaused += OpenPauseScreen;
+                GameManager.Source.OnGameUnpaused += HandleGameUnpaused;
+            } 
+        }
+
+        private void OnDestroy()
+        {
+            if (GameManager.Source != null)
+            {
+                GameManager.Source.OnGamePaused -= OpenPauseScreen;
+                GameManager.Source.OnGameUnpaused -= HandleGameUnpaused;
+            }
+        }
+
+        private void HandleGameUnpaused()
+        {
+            ClosePauseScreen();
+            CloseSettingsScreen();
+        }
 
         public void RegisterButton(string key, Button button)
         {
@@ -65,6 +91,21 @@ namespace Virus
             UnlockAllButtons();
         }
 
+        public void OpenPauseScreen()
+        {
+            foreach (var button in _pauseCanvas.GetComponentsInChildren<Button>(true))
+            {
+                button.interactable = true;
+            }
+
+            _pauseCanvas.SetActive(true);
+        }
+
+        public void ClosePauseScreen()
+        {
+            _pauseCanvas.SetActive(false);
+        }
+
         public void OpenSettingsScreen()
         {
             LockAllButtons();
@@ -81,6 +122,21 @@ namespace Virus
         {
             _settingsCanvas.SetActive(false);
             UnlockAllButtons();
+        }
+
+        public void OpenGameOverScreen()
+        {
+            foreach (var button in _gameOverCanvas.GetComponentsInChildren<Button>(true))
+            {
+                button.interactable = true;
+            }
+
+            _gameOverCanvas.SetActive(true);
+        }
+
+        public void CloseGameOverScreen()
+        {
+            _gameOverCanvas.SetActive(false);
         }
     }
 }

@@ -18,5 +18,14 @@ namespace Virus
 
         void PlayLevelMusic(string audioName);
         void PlayOneShot(string audioName);
+
+        void PlayJumpSFX();
+        void PlayCookieSFX();
+        void PlayShootSFX();
+        void PlayLaserDamageSFX();
+        void PlayLaserOffSFX();
+        void PlayEnemyShootSFX();
+        void PlayAmbientAudio(string audioName);
+        void StopAmbientAudio();
     }
 }

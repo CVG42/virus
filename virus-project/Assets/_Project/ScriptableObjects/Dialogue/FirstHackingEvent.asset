@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f21eadb88876b448b257480e5a50e9, type: 3}
+  m_Name: FirstHackingEvent
+  m_EditorClassIdentifier: 
+  DialogueLines:
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Here it is, let's walk through the screen.
+  - Character: {fileID: 11400000, guid: efc2c236ea8f2ee4db3326d1dae4ea6f, type: 2}
+    Line: Where do you think you're going?
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Oh no, the antivirus! We need to hack this terminal!
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: Huh? Hack?
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Yes! Hack! I'll guide you, just write the words shown in this temrinal.
+  - Character: {fileID: 11400000, guid: efc2c236ea8f2ee4db3326d1dae4ea6f, type: 2}
+    Line: Hahaha do you think you can do it before the timer runs out? You only have
+      10 seconds.
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: We can do it!
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: As long as I can keep eating.
+  - Character: {fileID: 11400000, guid: efc2c236ea8f2ee4db3326d1dae4ea6f, type: 2}
+    Line: Good luck.
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Okay, it's time! And don't forget to type the spaces!

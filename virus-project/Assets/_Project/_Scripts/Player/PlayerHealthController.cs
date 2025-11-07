@@ -9,6 +9,8 @@ namespace Virus
         [SerializeField] private PlayerHealthBar _healthBar;
         [SerializeField] private CameraShake _cameraShake;
 
+        private Vector3 _startPosition;
+
         private void Start()
         {
             HealthManager.Source.Initialize(_playerHealth);
@@ -17,6 +19,8 @@ namespace Virus
             HealthManager.Source.OnHealthChanged += UpdateHealthBar;
             EnemyManager.Source.OnEnemyAttack += TakeDamage;
             HealthManager.Source.OnDeath += PlayerDead;
+
+            _startPosition = transform.position;
         }
 
         private void OnDestroy()
@@ -40,7 +44,20 @@ namespace Virus
 
         private void PlayerDead()
         {
-            Debug.Log("GAME OVER");
+            ResetTransform();
+        }
+
+        private void ResetTransform()
+        {
+            transform.position = _startPosition;
+            transform.rotation = Quaternion.identity;
+            RestoreHealth();
+        }
+
+        private async void RestoreHealth()
+        {
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+            HealthManager.Source.RestoreFullHealth();
         }
     }
 }

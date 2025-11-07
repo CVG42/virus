@@ -31,6 +31,7 @@ namespace Virus
 
             GameManager.Source.OnGamePaused += PausePlayer;
             GameManager.Source.OnGameUnpaused += ResumePlayer;
+            GameManager.Source.OnGameStateChanged += OnGameStateChanged;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -56,6 +57,7 @@ namespace Virus
             InputManager.Source.OnJumpButtonPressed -= Jump;
             GameManager.Source.OnGamePaused -= PausePlayer;
             GameManager.Source.OnGameUnpaused -= ResumePlayer;
+            GameManager.Source.OnGameStateChanged -= OnGameStateChanged;
         }
 
         private void GroundCheck()
@@ -91,6 +93,7 @@ namespace Virus
         {
             if (_isGrounded)
             {
+                // AudioManager.Source.PlayJumpSFX();
                 _isGrounded = false;
                 _groundCheckTimer = _groundCheckDelay;
                 _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _playerVariables.JumpForce, _rigidbody.velocity.z);
@@ -168,6 +171,23 @@ namespace Virus
             _isPaused = false;
             _rigidbody.isKinematic = false;
             _animator.speed = 1f;
+        }
+
+        private void OnGameStateChanged(GameState state)
+        {
+            if (state == GameState.OnDialogue)
+            {
+                _isPaused = true;
+                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.isKinematic = true;
+                _animator.speed = 0f;
+            }
+            else if (state == GameState.OnPlay)
+            {
+                _isPaused = false;
+                _rigidbody.isKinematic = false;
+                _animator.speed = 1f;
+            }
         }
     }
 }

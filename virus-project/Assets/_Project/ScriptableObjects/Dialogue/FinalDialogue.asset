@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f21eadb88876b448b257480e5a50e9, type: 3}
+  m_Name: FinalDialogue
+  m_EditorClassIdentifier: 
+  DialogueLines:
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: So this is how it feels to be in control...
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: I actually feel nothing... I can't even eat anymore...
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: But we had a mission, and we fulfilled it.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: So is this the end?
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: Boring. Such a shortage of cookies...
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: As if they had to restore from factory not so long ago..
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Yes, but we should be greatful with our creator, we served a purpose...
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: As they say, for data you are, and to data shall you return.
+  - Character: {fileID: 11400000, guid: 8f5b745a251d5ad47bf1db6dc4669912, type: 2}
+    Line: Mr. Eye, I don't feel so good...
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: Blessed be the name of the system.
+  - Character: {fileID: 11400000, guid: af848f8112fcd1b4988dd4949174bf3c, type: 2}
+    Line: You're weird.

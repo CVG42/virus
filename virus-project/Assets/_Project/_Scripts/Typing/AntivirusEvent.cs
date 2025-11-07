@@ -30,6 +30,21 @@ namespace Virus
             if (_isActivated) return;
             if (!other.CompareTag("Player")) return;
 
+            StartHackingEvent();
+        }
+
+        public void ForceStartEvent()
+        {
+            if (_isActivated)
+            {
+                return;
+            }
+
+            StartHackingEvent();
+        }
+
+        private void StartHackingEvent()
+        {
             GameManager.Source.ChangeState(GameState.OnAntivirusEvent);
             _isActivated = true;
 
