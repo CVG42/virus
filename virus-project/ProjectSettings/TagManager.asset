@@ -11,6 +11,7 @@ TagManager:
   - FallingBlock
   - Pit2
   - Pit3
+  - Pit4
   layers:
   - Default
   - TransparentFX

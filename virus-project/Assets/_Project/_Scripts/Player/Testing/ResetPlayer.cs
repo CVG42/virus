@@ -31,6 +31,11 @@ namespace Virus
             {
                 ResetCheckpoint3();
             }
+
+            if (other.CompareTag("Pit4"))
+            {
+                ResetCheckpoint4();
+            }
         }
 
         private void ResetTransform()
