@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Virus.Flow;
 
 namespace Virus
 {
@@ -11,18 +12,16 @@ namespace Virus
         {
             if (loadingScreen == null) return;
 
-            // Auto-test on start
             await loadingScreen.ShowLoadingScreen();
 
-            // Simulate loading
             for (int i = 0; i <= 100; i++)
             {
                 loadingScreen.UpdateProgress(i / 100f);
                 await UniTask.Delay(100);
             }
 
-            await UniTask.Delay(1000); // Show completion for 1 second
-            await loadingScreen.HideLoadingScreen();
+            await UniTask.Delay(1000);
+            FlowManager.Source.LoadScene("Level");
         }
     }
 }

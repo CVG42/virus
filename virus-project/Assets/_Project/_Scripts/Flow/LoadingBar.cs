@@ -2,10 +2,10 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Text;
-using System;
 using TMPro;
 using UnityEngine;
 using System.Threading;
+using Virus.Flow;
 
 namespace Virus
 {
@@ -35,14 +35,13 @@ namespace Virus
 
         void Awake()
         {
-            // Setup ghost positions
             _ghostPositions = new HashSet<int>
         {
-            _barWidth / 6,        // ~16%
-            _barWidth / 3,        // ~33%
-            _barWidth / 2,        // 50% 
-            (_barWidth * 2) / 3,  // ~66%
-            (_barWidth * 5) / 6   // ~83%
+            _barWidth / 6,
+            _barWidth / 3,
+            _barWidth / 2,
+            (_barWidth * 2) / 3,
+            (_barWidth * 5) / 6
         };
 
             if (_canvasGroup != null)
@@ -59,7 +58,6 @@ namespace Virus
             _animationFrame = 0;
             _eatenGhosts.Clear();
 
-            // Cancel any previous animation
             _cts?.Cancel();
             _cts = new CancellationTokenSource();
 
@@ -81,6 +79,7 @@ namespace Virus
             {
                 await _canvasGroup.DOFade(0f, 0.3f).AsyncWaitForCompletion();
                 _canvasGroup.gameObject.SetActive(false);
+                FlowManager.Source.LoadScene("Level");
             }
         }
 
@@ -98,7 +97,6 @@ namespace Virus
             {
                 _animationFrame++;
 
-                // Pac-Man eats ghost if he passes over it
                 if (_ghostPositions.Contains(pacmanPosition) && !_eatenGhosts.Contains(pacmanPosition))
                     _eatenGhosts.Add(pacmanPosition);
 
@@ -111,7 +109,6 @@ namespace Virus
                 await UniTask.Delay((int)(_updateInterval * 1000), cancellationToken: token);
             }
 
-            // Ensure final state
             if (_currentProgress >= 1f)
                 UpdateLoadingBar(_barWidth - 1);
         }
