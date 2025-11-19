@@ -6,6 +6,7 @@ namespace Virus
     public interface ICollectableSource
     {
         event Action<int> OnCookiesChanged;
+        event Action OnCookieCollected;
 
         int TotalCookies { get; }
 
