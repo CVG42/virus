@@ -8,6 +8,7 @@ namespace Virus
         public int TotalCookies { get; private set; }
 
         public event Action<int> OnCookiesChanged;
+        public event Action OnCookieCollected;
 
         protected override void Awake()
         {
@@ -21,6 +22,7 @@ namespace Virus
             TotalCookies++;
 
             OnCookiesChanged.Invoke(TotalCookies);
+            OnCookieCollected?.Invoke();
         }
 
         public void ResetCookies()
