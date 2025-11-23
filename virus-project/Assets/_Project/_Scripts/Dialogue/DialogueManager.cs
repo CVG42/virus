@@ -215,7 +215,7 @@ namespace Virus
 
         private async UniTask DisableGameplayDialogue()
         {
-            _dialogueGameplayRectTransform.DOAnchorPosX(761, 0.5f, true);
+            _dialogueGameplayRectTransform.DOAnchorPosX(640, 0.5f, true);
             await UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.DeltaTime);
             _dialogueGameplayCanvas.enabled = false;
         }

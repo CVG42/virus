@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CollectCookie
   m_EditorClassIdentifier: 
   id: collect_1_cookie
-  title: Cookie
+  title: Cookie Crumb
   description: Collect 1 cookie.
   icon: {fileID: 0}
   unlockByDefault: 0
