@@ -6,37 +6,39 @@ namespace Virus
 {
     public class AchievementController : MonoBehaviour
     {
+        [SerializeField] AchievementPopupUI _popupUI;
         private readonly List<Action> _evaluators = new();
 
         private void Start()
         {
-            CollectablesManager.Source.OnCookieCollected += EvaluateCookiesAchievements;
+            CollectablesManager.Source.OnCookieCollected += () => { EvaluateCookieAchievements(); };
+
+            _evaluators.Add(EvaluateCookieAchievements);
         }
 
         private void OnDestroy()
         {
-            CollectablesManager.Source.OnCookieCollected -= EvaluateCookiesAchievements;
+            CollectablesManager.Source.OnCookieCollected -= EvaluateCookieAchievements;
         }
 
-        private void EvaluateCookiesAchievements()
+        private void EvaluateCookieAchievements()
         {
-            if (CollectablesManager.Source.TotalCookies == 1)
-            {
-                AchievementManager.Source.Unlock("collect_1_cookie");
-            }
+            TryUnlock("collect_1_cookie", CollectablesManager.Source.TotalCookies == 1);
+            TryUnlock("collect_5_cookie", CollectablesManager.Source.TotalCookies == 5);
+            TryUnlock("collect_10_cookie", CollectablesManager.Source.TotalCookies == 10);
+            TryUnlock("collect_70_cookie", CollectablesManager.Source.TotalCookies == 70);
         }
 
         private void TryUnlock(string id, bool condition)
         {
-            if (!condition)
-                return;
+            if (!condition) return;
 
             bool unlocked = AchievementManager.Source.Unlock(id);
-            if (!unlocked)
-                return; 
+            
+            if (!unlocked) return; 
 
             var achievement = AchievementManager.Source.GetDefinition(id);
-            // popupUI.Show(achievement);
+            _popupUI.Show(achievement);
         }
     }
 }
