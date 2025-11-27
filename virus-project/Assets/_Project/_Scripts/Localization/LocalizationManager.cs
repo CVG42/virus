@@ -9,6 +9,7 @@ namespace Virus
         public static readonly string[] Languages = { "English", "Spanish", "Portuguese", "Japanese" };
         public string CurrentLanguage => _currentLanguage;
         public event Action OnLanguageChanged;
+        public event Action<string> OnLanguageChanging;
 
         private Dictionary<string, Dictionary<string, string>> _localizationData = new();
         private string _currentLanguage = "English";
@@ -93,6 +94,7 @@ namespace Virus
             PlayerPrefs.Save();
 
             OnLanguageChanged?.Invoke();
+            OnLanguageChanging?.Invoke(language);
         }
 
         public string GetLocalizedText(string key)
