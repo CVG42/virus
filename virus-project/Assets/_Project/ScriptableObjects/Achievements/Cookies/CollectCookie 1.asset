@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2d2e5268a4ff947972ec779969af86, type: 3}
   m_Name: CollectCookie 1
   m_EditorClassIdentifier: 
-  id: collect_5_cookie
+  id: 2
   title: Sweet Tooth
   description: Collect 5 cookies.
   icon: {fileID: 0}

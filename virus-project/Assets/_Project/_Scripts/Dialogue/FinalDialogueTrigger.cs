@@ -6,6 +6,7 @@ namespace Virus
     public class FinalDialogueTrigger : MonoBehaviour
     {
         [SerializeField] private Dialogue _finalDialogue;
+        [SerializeField] private EndLevelHandler _endLevelHandler;
 
         private void TriggerFinalDialogue()
         {
@@ -20,6 +21,7 @@ namespace Virus
 
             await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
 
+            _endLevelHandler.OnLevelCompleted();
             UIManager.Source.OpenGameOverScreen();
             GameManager.Source.ChangeState(GameState.OnGameOver);
         }

@@ -7,26 +7,31 @@ namespace Virus
     public class AchievementController : MonoBehaviour
     {
         [SerializeField] AchievementPopupUI _popupUI;
-        private readonly List<Action> _evaluators = new();
 
         private void Start()
         {
-            CollectablesManager.Source.OnCookieCollected += () => { EvaluateCookieAchievements(); };
-
-            _evaluators.Add(EvaluateCookieAchievements);
+            CollectablesManager.Source.OnCookieCollected += EvaluateCookieAchievements;
+            AchievementManager.Source.OnAchievementUnlocked += ShowAchievementPopup;
         }
 
         private void OnDestroy()
         {
             CollectablesManager.Source.OnCookieCollected -= EvaluateCookieAchievements;
+
+            if (AchievementManager.Source != null)
+            {
+                AchievementManager.Source.OnAchievementUnlocked -= ShowAchievementPopup;
+            }
         }
 
         private void EvaluateCookieAchievements()
         {
-            TryUnlock("collect_1_cookie", CollectablesManager.Source.TotalCookies == 1);
-            TryUnlock("collect_5_cookie", CollectablesManager.Source.TotalCookies == 5);
-            TryUnlock("collect_10_cookie", CollectablesManager.Source.TotalCookies == 10);
-            TryUnlock("collect_70_cookie", CollectablesManager.Source.TotalCookies == 70);
+            int totalCookies = CollectablesManager.Source.TotalCookies;
+
+            TryUnlock("1", totalCookies >= 1);
+            TryUnlock("2", totalCookies >= 5);
+            TryUnlock("3", totalCookies >= 10);
+            TryUnlock("4", totalCookies >= 70);
         }
 
         private void TryUnlock(string id, bool condition)
@@ -34,11 +39,19 @@ namespace Virus
             if (!condition) return;
 
             bool unlocked = AchievementManager.Source.Unlock(id);
-            
-            if (!unlocked) return; 
 
-            var achievement = AchievementManager.Source.GetDefinition(id);
-            _popupUI.Show(achievement);
+            if (unlocked)
+            {
+                Debug.Log($"Condición cumplida para logro: {id}");
+            }
+        }
+
+        private void ShowAchievementPopup(AchievementAttributes achievement)
+        {
+            if (_popupUI != null)
+            {
+                _popupUI.Show(achievement);
+            }
         }
     }
 }

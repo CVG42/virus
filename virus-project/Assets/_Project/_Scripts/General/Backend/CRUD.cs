@@ -51,6 +51,11 @@ namespace Virus
 
                         PlayerPrefs.Save();
 
+                        if (AchievementManager.Source != null)
+                        {
+                            await AchievementManager.Source.SyncWithServer();
+                        }
+
                         Debug.Log("Default settings created for new user.");
                     }
 
@@ -86,6 +91,11 @@ namespace Virus
                     LocalizationManager.Source.SetLanguage(LanguageMap.FromDB(settingsResponse.game_language));
 
                     PlayerPrefs.Save();
+
+                    if (AchievementManager.Source != null)
+                    {
+                        await AchievementManager.Source.SyncWithServer();
+                    }
 
                     Debug.Log("User settings loaded from database.");
                 }

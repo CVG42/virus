@@ -23,6 +23,8 @@ namespace Virus
 
             OnCookiesChanged.Invoke(TotalCookies);
             OnCookieCollected?.Invoke();
+
+            UserProgress.Source.UpdateCookiesProgress(TotalCookies);
         }
 
         public void ResetCookies()

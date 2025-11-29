@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2d2e5268a4ff947972ec779969af86, type: 3}
   m_Name: CollectCookie 2
   m_EditorClassIdentifier: 
-  id: collect_10_cookie
+  id: 3
   title: Sugar Rush
   description: Collect 10 cookies.
   icon: {fileID: 0}
