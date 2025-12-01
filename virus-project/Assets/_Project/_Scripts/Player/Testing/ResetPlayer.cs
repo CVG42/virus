@@ -4,62 +4,45 @@ namespace Virus
 {
     public class ResetPlayer : MonoBehaviour
     {
-        [SerializeField] private Transform _checkpoint2;
-        [SerializeField] private Transform _checkpoint3;
-        [SerializeField] private Transform _checkpoint4;
-
         private Vector3 _startPosition;
+        private Transform _currentCheckpoint;
 
         private void Start()
         {
             _startPosition = transform.position;
+            _currentCheckpoint = null;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Pit"))
             {
-                ResetTransform();
+                Respawn();
             }
 
-            if (other.CompareTag("Pit2"))
+            if (other.CompareTag("Checkpoint"))
             {
-                ResetCheckpoint2();
+                SetCheckpoint(other.transform);
             }
+        }
 
-            if (other.CompareTag("Pit3"))
+        public void SetCheckpoint(Transform checkpointTransform)
+        {
+            _currentCheckpoint = checkpointTransform;
+        }
+
+        private void Respawn()
+        {
+            if (_currentCheckpoint != null)
             {
-                ResetCheckpoint3();
+                transform.position = _currentCheckpoint.position;
+                transform.rotation = _currentCheckpoint.rotation;
             }
-
-            if (other.CompareTag("Pit4"))
+            else
             {
-                ResetCheckpoint4();
+                transform.position = _startPosition;
+                transform.rotation = Quaternion.identity;
             }
-        }
-
-        private void ResetTransform()
-        {
-            transform.position = _startPosition;
-            transform.rotation = Quaternion.identity;
-        }
-
-        private void ResetCheckpoint2()
-        {
-            transform.position = _checkpoint2.position;
-            transform.rotation = Quaternion.identity;
-        }
-
-        private void ResetCheckpoint3()
-        {
-            transform.position = _checkpoint3.position;
-            transform.rotation = Quaternion.identity;
-        }
-
-        private void ResetCheckpoint4()
-        {
-            transform.position = _checkpoint4.position;
-            transform.rotation = Quaternion.identity;
         }
     }
 }

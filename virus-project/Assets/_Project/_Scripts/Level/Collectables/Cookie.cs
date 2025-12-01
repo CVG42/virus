@@ -5,6 +5,7 @@ namespace Virus
     public class Cookie : MonoBehaviour
     {
         [SerializeField] GameObject _cookieModel;
+        [SerializeField] ParticleSystem _particles;
 
         private bool _isCollected = false;
 
@@ -29,6 +30,7 @@ namespace Virus
 
             if (other.gameObject.CompareTag("Player"))
             {
+                _particles.Play();
                 AudioManager.Source.PlayCookieSFX();
                 Collect();
             }

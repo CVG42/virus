@@ -12,6 +12,7 @@ TagManager:
   - Pit2
   - Pit3
   - Pit4
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

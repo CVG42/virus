@@ -27,8 +27,8 @@ namespace Virus
         {
             GameManager.Source.OnGamePaused -= PauseAnimation;
             GameManager.Source.OnGameUnpaused -= ResumeAnimation;
-            _rotationTween?.Pause();
-            _floatTween?.Pause();
+            _rotationTween?.Kill();
+            _floatTween?.Kill();
         }
 
         private void CookieMovement()
@@ -64,6 +64,12 @@ namespace Virus
         {
             _rotationTween.Play();
             _floatTween.Play();
+        }
+
+        private void OnDestroy()
+        {
+            _rotationTween?.Kill();
+            _floatTween?.Kill();
         }
     }
 }
