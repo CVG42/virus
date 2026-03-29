@@ -8,12 +8,17 @@ namespace Virus
         [SerializeField] private EnemyData _enemy;
 
         private float _currentHealth;
+        private DissolveEffect _dissolveEffect;
+        private Collider _enemyCollider;
 
         public char Letter => _letter;
 
         private void Start()
         {
             _currentHealth = _enemy.EnemyHealth;
+
+            _dissolveEffect = GetComponent<DissolveEffect>();
+            _enemyCollider = GetComponent<Collider>();
         }
 
         public void Initialize(char letter)
@@ -24,14 +29,26 @@ namespace Virus
         public void TakeDamage()
         {
             _currentHealth--;
-            EnemyDead();
+            EnemyDeath();
         }
 
-        private void EnemyDead()
+        private void EnemyDeath()
         {
             if (_currentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                if (_enemyCollider != null)
+                {
+                    _enemyCollider.enabled = false;
+                }
+
+                if (_dissolveEffect != null)
+                {
+                    _dissolveEffect.StartDissolve();
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
 
