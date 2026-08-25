@@ -1,0 +1,5 @@
+int score;
+
+Update(){
+    score++;
+}
