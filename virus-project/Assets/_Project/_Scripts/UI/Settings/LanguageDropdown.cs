@@ -6,21 +6,14 @@ namespace Virus
 {
     public class LanguageDropdown : MonoBehaviour
     {
-        [SerializeField] private TMP_Dropdown dropdown;
+        private TMP_Dropdown _dropdown;
 
         private void Awake()
         {
-            if (dropdown == null)
-                dropdown = GetComponent<TMP_Dropdown>();
-
-            if (dropdown == null)
-            {
-                Debug.LogError("Dropdown is not assigned and could not be found automatically.");
-                return;
-            }
+            _dropdown = GetComponent<TMP_Dropdown>();
 
             InitializeDropdown();
-            dropdown.onValueChanged.AddListener(OnLanguageSelected);
+            _dropdown.onValueChanged.AddListener(OnLanguageSelected);
         }
 
         private void Start()
@@ -32,7 +25,7 @@ namespace Virus
         private void OnDestroy()
         {
             LocalizationManager.Source.OnLanguageChanged -= UpdateDropdownLabels;
-            dropdown.onValueChanged.RemoveListener(OnLanguageSelected);
+            _dropdown.onValueChanged.RemoveListener(OnLanguageSelected);
         }
 
         private void InitializeDropdown()
@@ -44,11 +37,11 @@ namespace Virus
                 options.Add(key.Localize());
             }
 
-            dropdown.ClearOptions();
-            dropdown.AddOptions(options);
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(options);
 
-            dropdown.value = GetCurrentLanguageIndex();
-            dropdown.RefreshShownValue();
+            _dropdown.value = GetCurrentLanguageIndex();
+            _dropdown.RefreshShownValue();
         }
 
         private void OnLanguageSelected(int index)
@@ -59,20 +52,26 @@ namespace Virus
         private void UpdateDropdownLabels()
         {
             var options = new List<TMP_Dropdown.OptionData>();
-            foreach (var key in LocalizationExtensions.LanguageKeys)
-                options.Add(new TMP_Dropdown.OptionData(key.Localize()));
 
-            dropdown.options = options;
-            dropdown.captionText.text = options[GetCurrentLanguageIndex()].text;
+            foreach (var key in LocalizationExtensions.LanguageKeys)
+            {
+                options.Add(new TMP_Dropdown.OptionData(key.Localize()));
+            }
+
+            _dropdown.options = options;
+            _dropdown.captionText.text = options[GetCurrentLanguageIndex()].text;
         }
 
         private int GetCurrentLanguageIndex()
         {
             string current = LocalizationManager.Source.CurrentLanguage;
+
             for (int i = 0; i < LocalizationExtensions.LanguageKeys.Length; i++)
             {
                 if (LocalizationExtensions.LanguageKeys[i] == current)
+                {
                     return i;
+                }
             }
             return 0;
         }
